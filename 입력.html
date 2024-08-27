@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="id" placeholder="입력">
+    <input type="button" value="클릭" onclick="send()"><br>
+    <span id="result">출력</span>
+
+    <script>
+        function send(){
+            let t1 = document.getElementById('id').value;
+            let r1 = document.getElementById('result');
+            r1.innerText = t1;
+
+            //input의 값은 value.
+            //html의 text 출력은 innerText 혹은 innerHTML
+        }
+    </script>
+</body>
+</html>
