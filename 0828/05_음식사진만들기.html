@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>음식 사진</title>
     <style>
-
-
         /** main tool */
         .picMain {
             display: flex;
@@ -20,6 +18,10 @@
         .mainPic {
             width: 400px;
             height: 300px;
+            background-size: contain; /* 배경 이미지 크기 조절 */
+            background-position: center; /* 배경 이미지 위치 조절 */
+            background-repeat: no-repeat; /* 이미지 반복 방지 */
+            border: 1px solid #ddd; /* 경계선 추가 */
         }
 
         /** 음식사진 보조 **/
@@ -45,7 +47,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            cursor: pointer; /* 클릭 커서 추가 */
+        }
+
+        .photo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover; /* 이미지 크기 조절 */
         }
 
         /** 버튼 공간 */
@@ -72,26 +80,41 @@
 
 <body>
     <div class="picMain">
-        <div class="mainPic"></div>
+        <div class="mainPic" id="main"></div>
         <div class="suvPic">
             <div class="btn_area">
-                <div class="btn01">쿠키</div>
-                <div class="btn01">케이크</div>
+                <div class="btn01" onclick="result('all')">전체</div>
+                <div class="btn01" onclick="result('coffee')">커피</div>
+                <div class="btn01" onclick="result('cake')">케이크</div>
             </div>
             <!-- 사진첩 갤러리 -->
-            <div class="gallery">
-                <div class="photo">사진 1</div>
-                <div class="photo">사진 2</div>
-                <div class="photo">사진 3</div>
-                <div class="photo">사진 4</div>
-                <div class="photo">사진 4</div>
-                <div class="photo">사진 4</div>
+            <div class="gallery" id="gallery">
                 <!-- 추가 사진 필요 시 여기에 더 추가 -->
             </div>
         </div>
     </div>
     <script>
-        
+        function result(category) {
+            let ga = document.getElementById('gallery');
+            const pic = [
+                { pic: '../img/ameriano.jpg', category: 'coffee' },
+                { pic: '../img/charamel.jpg', category: 'coffee' },
+                { pic: '../img/latte.jpg', category: 'coffee' },
+                { pic: '../img/creamCake.jpg', category: 'cake' },
+                { pic: '../img/chocoCake.jpg', category: 'cake' }
+            ];
+            let str = "";
+            for (let i = 0; i < pic.length; i++) {
+                if (category === 'all' || category === pic[i].category) {
+                    str += '<div class="photo" onclick="loadMainPic(\'' + pic[i].pic + '\')"><img src="' + pic[i].pic + '" ></div>';
+                }
+            }
+            ga.innerHTML = str;
+        }
+
+        function loadMainPic(imagePath) {
+            document.querySelector('.mainPic').style.backgroundImage = "url('" + imagePath + "')";
+        }
     </script>
 </body>
 </html>

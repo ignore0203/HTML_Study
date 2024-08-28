@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="add"></div>
+    <script>
+        //함수 선언식, 함수 표현식
+
+        //함수 선언식
+        start();
+        function start(){
+            console.log('start');
+        }
+
+        //함수 표현식
+        let fun02 = function(){
+            console.log('변수');
+        }
+        fun02();
+
+        //함수 표현식, ESS (2015년 이전 버전의 IE 동작 X => 공무원 pc (국가사업에는 사용 지양 ))
+        let fn03 = () => {
+            console.log('fn03');
+        }
+
+        start02(1);
+        function start02(num1){
+            console.log('start02',num1);
+        }
+
+        let fn04 = (num1) => {
+            console.log('num1: ', num1);
+        }
+
+        //함수 표현식 사용할 때 주의사항
+        //함수 표현식 사용 할 때, 무조건 함수가 우선적으로 선언되어야 한다
+
+        function start03(num1,num2){
+            console.log(num1+num2);
+        }
+        let fn05 = (num1,num2) => {
+            console.log(num1+num2);
+        }
+        
+
+        //callBack 함수
+        document.querySelector('.add').addEventListener('click',function() {});
+        document.querySelector('.add').addEventListener('click',fun02);
+    </script>
+</body>
+</html>

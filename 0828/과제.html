@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.1s; /* 배경 색상 전환 애니메이션 */
+        }
+
+        .input_form {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 세로 정렬 */
+            position: relative; /* 자식 요소의 절대 위치를 위해 필요 */
+        }
+
+        .input_form input[type="button"] {
+            padding: 15px 30px;
+            font-size: 15px;
+            font-weight: bold;
+            border: 1px solid #000;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .elapsed_time {
+            position: absolute;
+            bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="main" id="main">
+        <div class="input_form">
+            <input type="button" value="click" id="clickButton">
+            <input type="button" value="Re-Try" id="retryButton">
+            <div class="elapsed_time" id="elapsedTime">시간: -</div>
+        </div>
+    </div>
+    <script>
+        let startTime = 0; 
+        let changeToRedTimeout;
+        let clickHandled = false;
+        let gameStarted = false; 
+        let gameTimeout; 
+        let isGreen = false; 
+        let isRed = false; 
+
+        function changeBackgroundColor() {
+            if (!gameStarted) {
+                const randomDelay = Math.floor(Math.random() * 4000) + 1000;
+
+                gameTimeout = setTimeout(() => {
+                    const mainElement = document.getElementById('main');
+                    mainElement.style.backgroundColor = 'green';
+
+                    startTime = Date.now();
+                    isGreen = true; 
+
+                    changeToRedTimeout = setTimeout(() => {
+                        if (!clickHandled) {
+                            mainElement.style.backgroundColor = 'red';
+                            isGreen = false;
+                            isRed = true; 
+                        }
+                    }, 1000);
+                }, randomDelay);
+                
+                gameStarted = true;
+            }
+        }
+
+        function handleClick() {
+            const mainElement = document.getElementById('main');
+            const elapsedTimeElement = document.getElementById('elapsedTime');
+
+            const currentTime = Date.now();
+
+            if (isGreen && (currentTime - startTime < 1000)) {
+
+                mainElement.style.backgroundColor = 'blue';
+                const elapsedTime = (currentTime - startTime) / 1000; 
+                elapsedTimeElement.textContent = `시간: ${elapsedTime.toFixed(2)}초`;
+                clickHandled = true;
+
+                clearTimeout(changeToRedTimeout);
+            } else if (isRed) {
+ 
+                const elapsedTime = (currentTime - startTime) / 1000; 
+
+                elapsedTimeElement.textContent = `시간: ${elapsedTime.toFixed(2)}초`;
+            } else if (gameStarted) {
+
+                alert('너무 빨리 눌렀습니다!');
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            const mainElement = document.getElementById('main');
+            const elapsedTimeElement = document.getElementById('elapsedTime');
+
+
+            mainElement.style.backgroundColor = '';
+            elapsedTimeElement.textContent = '시간: -';
+
+            startTime = 0;
+            clickHandled = false;
+            isGreen = false;
+            isRed = false; 
+            gameStarted = false;
+
+            clearTimeout(gameTimeout);
+            clearTimeout(changeToRedTimeout);
+
+            changeBackgroundColor();
+        }
+
+        window.onload = function() {
+            resetGame();
+
+            document.getElementById('clickButton').addEventListener('click', handleClick);
+            document.getElementById('retryButton').addEventListener('click', resetGame);
+        };
+    </script>
+</body>
+
+</html>
