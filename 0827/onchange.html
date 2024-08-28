@@ -10,14 +10,20 @@
         <option value="coffee">커피</option>
         <option value="cake">케이크</option>
     </select>
-    <select id="menu02">
+    <select id="menu02" onchange="img()">
         <option>아메리카노</option>
         <option>카라멜마끼아또</option>
+        
     </select>
+    <span id="res"></span>
+    <div>
+        
+    </div>
     <script>
         
 
         let Str = ''
+        let Str1 = ''
         function box(){
             let m1 = document.getElementById('menu01').value;
             let m2 = document.getElementById('menu02');
@@ -26,8 +32,17 @@
             }else{
                 Str = '<option>생크림케이크</option><option>초코케이크</option>';
             }
-            console.log(m1);
             m2.innerHTML = Str;
+        }
+        const imgArr = ['\img\b.jpg',
+            '\img\a.jpg',
+            '\img\c.jpg',
+            '\img\d.jpg',
+        ]
+        function img(){
+            let targetVakue = document.getElementById('menu02').value;
+            document.getElementById('displayImage').src = imgArr[targetValue];
+            }
         }
         
     </script>
