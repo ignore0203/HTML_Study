@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="n1">
+    <input type="text" id="n2">
+    <input type="button" value="계산" onclick="result()">
+    <script>
+        let obj1 = {};
+        function result(){
+            let n1 = document.getElementById('n1').value;
+            let n2 = document.getElementById('n2').value;
+
+            obj1.plus = Number(n1)+Number(n2);
+            obj1.minus = n1-n2;
+            obj1.mul = n1*n2;
+            obj1.div = n1/n2;
+
+            console.log(obj1);
+
+            console.log("plus: "+obj1.plus);
+            console.log("minus: "+obj1.minus);
+            console.log("mul: "+obj1.mul);
+            console.log("div: "+obj1.div);
+        }
+    </script>
+</body>
+</html>
