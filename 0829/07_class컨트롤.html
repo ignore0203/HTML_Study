@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Class 만들기</title>
+        <style>
+            .red {
+                background-color: red;
+            }
+
+            .blue {
+                background-color: blue;
+            }
+
+            .green {
+                background-color: green;
+            }
+
+            .yellow {
+                background-color: yellow;
+            }
+
+            .dd {
+                margin: 15px;
+                width: 100px;
+                height: 100px;
+                display: inline-block;
+                border: 1px solid #000;
+            }
+        </style>
+        <script src="../Lib/JQuery_3.7.1.js"></script>
+    </head>
+
+    <body id="body">
+        <input type="radio" name="color" value="red">빨강색
+        <input type="radio" name="color" value="yellow">노랑색
+        <input type="radio" name="color" value="blue">파랑색
+        <input type="radio" name="color" value="green">초록색
+        <br />
+        <div name="dd" class="dd" id="div1"></div>
+        <div name="dd" class="dd"></div>
+        <div name="dd" class="dd"></div>
+        <div name="dd" class="dd"></div>
+        
+        <script>
+            $('input[name="color"]').on('change', function() {
+                let val = $('input[name="color"]:checked').val();
+
+                // removeclass 안에 우머것도 선언되지 않으면.
+                // 대상의 class 모두 제거
+                // .removeClass(['red', 'blue', 'green', 'yellow']); 배열안의 대상 클래스만 제거
+                $('div.dd').removeClass(['red', 'blue', 'green', 'yellow']);
+
+                // document.getElementById('div1').classList.add(val);
+                // $('대상').addclass(클래스 명);
+                // $('대상').addclass('클래스 명1', '클래스 명2'); 
+                $('div.dd').addClass(val);
+
+                // 존재 확인
+                // $('대상').hasClass('검색할 클래스 명'); // true, false 조건문 활용해서 on할 것인지 off할것인지 선택.
+                let blue = $('div.dd').hasClass('blue');
+                console.log('Blue : ', blue)
+            });
+
+            // add => 추가
+            // remove => 제거
+        </script>
+    </body>
+</html>
