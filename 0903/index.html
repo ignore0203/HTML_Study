@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        body {
+            top: 0;
+            position: absolute;
+            left: 30%;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        tr, td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+        .main {
+            background-color: skyblue;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sub {
+            background-color: lightgray;
+            text-align: center;
+            font-weight: bold;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .button-container input[type="button"] {
+            margin-left: 5px;
+        }
+        .wid {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <form id="rs">
+        <table>
+            <tr class="main">
+                <td colspan="2">회원 기본 정보</td>
+            </tr>
+            <tr>
+                <td class="sub">아이디:</td>
+                <td><input type="text" id="id" maxlength="12" class="wid"> 4~12자의 영문 대소문자와 숫자로만 입력</td>
+            </tr>
+            <tr>
+                <td class="sub">비밀번호:</td>
+                <td><input type="text" id="passwd" maxlength="12" class="wid"> 4~12자의 영문 대소문자와 숫자로만 입력</td>
+            </tr>
+            <tr>
+                <td class="sub">비밀번호확인:</td>
+                <td><input type="text" id="pwco" maxlength="12" class="wid"></td>
+            </tr>
+            <tr>
+                <td class="sub">메일주소:</td>
+                <td>
+                    <input type="text" id="email" class="wid"> @
+                    <select id="mail">
+                        <option value="n">naver.com</option>
+                        <option value="g">gmail.com</option>
+                        <option value="h">hanmail.net</option>
+                    </select> 예) id@domain.com
+                </td>
+            </tr>
+            <tr>
+                <td class="sub">이름:</td>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr class="main">
+                <td colspan="3">개인 신상 정보</td>
+            </tr>
+            <tr>
+                <td class="sub">주민등록번호:</td>
+                <td><input type="text" id="Frrn" maxlength="6" class="wid"> - <input type="text" id="Srrn" maxlength="7" class="wid"> 예) 123456-1234567</td>
+            </tr>
+            <tr>
+                <td class="sub">생일:</td>
+                <td>
+                    <input type="date" id="birth">
+                </td>
+            </tr>
+            <tr>
+                <td class="sub">관심분야:</td>
+                <td>
+                    <input type="checkbox" name="hobbys" value="컴퓨터">컴퓨터
+                    <input type="checkbox" name="hobbys" value="인터넷">인터넷
+                    <input type="checkbox" name="hobbys" value="여행">여행
+                    <input type="checkbox" name="hobbys" value="영화감상">영화감상
+                    <input type="checkbox" name="hobbys" value="음악감상">음악감상
+                </td>
+            </tr>
+            <tr>
+                <td class="sub">자기소개:</td>
+                <td><textarea id="rp"></textarea></td>
+            </tr>
+        </table>
+        <div class="button-container">
+            <input type="button" value="회원 가입" onclick="accession()">
+            <input type="button" value="다시 입력" onclick="reset()">
+        </div>
+    </form>
+
+    <script>
+        async function accession() {
+            const id = document.getElementById('id').value;
+            const passwd = document.getElementById('passwd').value;
+            const pwco = document.getElementById('pwco').value;
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const Frrn = document.getElementById('Frrn').value;
+            const Srrn = document.getElementById('Srrn').value;
+            const birth = document.getElementById('birth').value;
+            const hobby = document.getElementsByName('hobbys');
+            const rp = document.getElementById('rp').value;
+            const result = [];
+
+            for (let i = 0; i < hobby.length; i++) {
+                if (hobby[i].checked) {
+                    result.push(hobby[i].value);
+                }
+            }
+
+            if (id.length < 4) {
+                alert('아이디를 4자리 이상 입력해 주세요');
+                document.getElementById('id').focus();
+                return;
+            } else if (!/^[a-zA-Z0-9]+$/.test(id)) {
+                alert('아이디를 대소문자와 숫자만 입력해 주세요');
+                document.getElementById('id').focus();
+                return;
+            } else if (passwd.length < 4) {
+                alert('비밀번호를 4자리 이상 입력해 주세요');
+                document.getElementById('passwd').focus();
+                return;
+            } else if (!/^[a-zA-Z0-9]+$/.test(passwd)) {
+                alert('비밀번호를 대소문자와 숫자만 입력해 주세요');
+                document.getElementById('passwd').focus();
+                return;
+            } else if (passwd !== pwco) {
+                alert('비밀번호와 확인이 일치하지 않습니다');
+                document.getElementById('passwd').focus();
+                return;
+            } else if (email === "") {
+                alert('이메일을 입력해 주세요');
+                document.getElementById('email').focus();
+                return;
+            } else if (name === "") {
+                alert('이름을 입력해 주세요');
+                document.getElementById('name').focus();
+                return;
+            } else if (Frrn.length < 6 || Srrn.length < 7) {
+                alert('주민번호를 잘못 입력했습니다');
+                document.getElementById('Frrn').focus();
+                return;
+            } else if (birth === "") {
+                alert('생일을 입력해 주세요');
+                document.getElementById('birth').focus();
+                return;
+            } else if (result.length === 0) {
+                alert('취미를 선택해 주세요');
+                return;
+            } else if (rp === "") {
+                alert('간단한 자기소개를 써 주세요');
+                document.getElementById('rp').focus();
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id, passwd, email, name, Frrn, Srrn, birth, hobbys: result, rp
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const resultText = await response.text();
+                alert(resultText);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('서버와의 통신에서 오류가 발생했습니다.');
+            }
+        }
+
+        function reset() {
+            document.getElementById('rs').reset();
+        }
+    </script>
+</body>
+</html>
