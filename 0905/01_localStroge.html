@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스토리지 시작</title>
+</head>
+<body>
+    <input type="button" value="스토리지 저장" onclick="save()">
+    <input type="button" value="불러오기" onclick="lode()">
+    <input type="button" value="삭제" onclick="del()">
+    <input type="button" value="전체 삭제" onclick="delAll()">
+    <input type="button" value="다음 페이지" onclick="move()">
+    <script>
+        function del(){
+            localStorage.removeItem('key');
+        }
+        function delAll(){
+            localStorage.clear();
+        }
+        function move(){
+            location.href = '02_localStroge.html';
+        }
+
+        function save(){
+            localStorage.setItem('key','value');
+        }
+        function lode(){
+            localStorage.getItem('key');
+            console.log(test);
+        }
+    </script>
+</body>
+</html>
