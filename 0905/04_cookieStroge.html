@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="쿠키 체크하기" onclick="getCookie()">
+    <input type="button" value="쿠키 저장" onclick="setCookie()">
+
+    <script>
+        //cookie 생성
+        function setCookie(){
+            document.cookie = 'key=value'; //name = value
+
+            //그냥 저장했을때는 내가 키고있는 브라우저가 종료되면 cookie가 모두 삭제
+        }
+        //cookie 모두 불러오기
+       
+        
+    </script>
+    <h1>쿠키 만료기간 만들기</h1>
+    <input type="button" value="쿠키 체크하기" onclick="setDayCookie()">
+    <input type="button" value="max-age 저장" onclick="maxSave()">
+    <input type="button" value="쿠키 저장" onclick="setCookie()">
+
+    <input type="input" id="idcookie">
+    <input type="button" value="쿠키 값 가져오기" onclick="getNameCookie()">
+    <input type="button" value="쿠키 삭제하기" onclick="delCookie()">
+
+    <script>
+        function delCookie(){
+            let cookName=document.getElementById('idcookie');
+
+            console.log('삭제 대상 쿠키 : ',cookName.value);
+            
+            document.cookie = cookName.value+'= ;Max-age=-1';
+
+            cookName.value = '';
+            cookName.focus();
+        }
+
+        function getNameCookie(){
+            let cookName=document.getElementById('idcookie');
+            let va = getCookies(cookName.value);
+            console.log('value : ', va);
+
+            cookName.value = '';
+            cookName.focus();
+        }
+        //만료 기간을 설정 하기위해서는 cookie에 exqires 옵션을 추가해야 합니다
+        //exqires 경우 시계 형식 UTC,GMT 방식
+        function setDayCookie(){
+
+            let date = new Date();
+            date.setTime(date.getDate()* (100*60*60*24*1));
+            console.log(date.toUTCString());
+            let exqires = '; exqire'+date.toUTCString();
+
+            document.cookie='day=cook;'+exqires;
+            // document.cookie = "key=value, "
+
+            
+        }
+        function getCookie(){
+            console.log(document.cookie);
+        }
+
+        function maxSave(){
+            //숫자로 저장을 하는데 1=1초 (1시간 = 3600)
+            document.cookie = 'obj=apple; max-age = '+5;
+        }
+
+        //Secure
+        //SSL적용 된 것만, cookie가 실행 되도록 설정
+        //https에서만 동작 된다. http://localhost
+        document.cookie= 'sec=value; Secure;';
+
+        //Domain
+        //주소. localhost
+        //https://www.namer.com => naer.com / mail.naver.com => naver.com
+        document.cookie = 'doc=banana; Domain=localhost';
+        //Domain속성을 입력을 안 할 셩우, Default로 현제 사이트의 domain이 자동으로 입력
+        //현제 페이지와 쿠키가 저장된 Domain이 일치하지 않으면 cookie는 실행 되지 않는다
+
+        //Path
+        document.cookie= 'pa=papa; path=/';
+        //서버에 대한 환경에 따라서 있는 경우가 있고, 없는경우가 존재
+        //한국은 없는 경우가 대부분 ( 이유는ip가 너무 많아요)
+
+        //ip한 개로 여러 회사가 같이 사용. => port로 구분
+        //Path는 '/'이게 현제 폴더 위치 '../lib/assact'
+        //우리는 server갠ㅁ이 없고 폴더를 통해서 주고 받다보니 path (폴더위치)
+        //Path= '/' 에는 최상위, 이 경로 기한, 하의 디렉터리 모두 포함 ''
+    </script>
+</body>
+</html>
